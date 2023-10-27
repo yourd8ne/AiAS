@@ -2,7 +2,7 @@ from graph3 import Graph3
 from graph15 import Graph15
 
 def first_test():
-    g3 = Graph3()
+    g3 = Graph3(8)
     g3.add_node('A')
     g3.add_node('B')
     g3.add_node('C')
@@ -26,7 +26,7 @@ def first_test():
     shortest_paths = g3.dijkstra('A')
     print(shortest_paths)
     
-    g15 = Graph15()
+    g15 = Graph15(8)
     g15.add_node('A')
     g15.add_node('B')
     g15.add_node('C')
@@ -51,8 +51,8 @@ def first_test():
     print(shortest_paths)
 
 def second_test():
-    g3 = Graph3()
-    g15 = Graph15()
+    g3 = Graph3(26)
+    g15 = Graph15(26)
     g3.add_node('A')
     g15.add_node('A')
     
@@ -164,3 +164,5 @@ def second_test():
     g15.add_edge('W', 'Z', 4)
     g15.add_edge('Y', 'Z', 6)
     g15.add_edge('X', 'Z', 4)
+    shortest_paths = g3.dijkstra('A')
+    print(shortest_paths)

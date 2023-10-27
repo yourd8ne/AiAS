@@ -1,9 +1,8 @@
 import random
 import networkx as nx
-# import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+matplotlib.use('Qt5Agg')
 
 
 class TernaryHeap:
@@ -13,7 +12,7 @@ class TernaryHeap:
     def push(self, value):
         self.heap.append(value)
         self._sift_up(len(self.heap) - 1)
-    
+
     def pop(self):
         if len(self.heap) == 1:
             return self.heap.pop()
@@ -21,13 +20,13 @@ class TernaryHeap:
         self.heap[0] = self.heap.pop()
         self._sift_down(0)
         return value
-    
+
     def _sift_up(self, index):
         parent = (index - 1) // 3
         if parent >= 0 and self.heap[index][0] < self.heap[parent][0]:
             self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
             self._sift_up(parent)
-    
+
     def _sift_down(self, index):
         child1 = 3 * index + 1
         child2 = 3 * index + 2
@@ -42,17 +41,19 @@ class TernaryHeap:
         if smallest != index:
             self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
             self._sift_down(smallest)
-    
+
+
 class Graph3:
-    def __init__(self):
+    def __init__(self, num_vertices=None):
         self.nodes = set()
         self.edges = {}
         self.distances = {}
-    
+        self.num_vertices = num_vertices
+
     def add_node(self, value):
         self.nodes.add(value)
         self.edges[value] = []
-    
+
     def add_edge(self, from_node, to_node, distance):
         self.edges[from_node].append(to_node)
         self.distances[(from_node, to_node)] = distance
@@ -71,7 +72,7 @@ class Graph3:
                     visited[edge] = weight
                     heap.push((weight, edge))
         return visited
-    
+
     def generate_random_graph(self, num_nodes, num_edges):
         self.add_node('0')
         for i in range(1, num_nodes):
@@ -81,16 +82,16 @@ class Graph3:
         for k in range(num_edges):
             edge = available_edges[k]
             self.add_edge(edge[0], edge[1], random.randint(1, 10))
-    
+
     def generate_complete_graph(self, num_nodes):
         for i in range(num_nodes):
-            self.add_node(i)
+            self.add_node(str(i))
         for i in range(num_nodes):
             for j in range(i + 1, num_nodes):
                 distance = random.randint(1, 10)
-                self.add_edge(i, j, distance)
-                self.add_edge(j, i, distance)
-    
+                if str(j) not in self.edges[str(i)]:
+                    self.add_edge(str(i), str(j), distance)
+
     def visualize_graph(self):
         G = nx.Graph()
         for node in self.nodes:

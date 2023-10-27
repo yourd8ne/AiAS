@@ -1,8 +1,10 @@
 import random
 import networkx as nx
 import matplotlib.pyplot as plt
-		
-		
+import matplotlib
+matplotlib.use('Qt5Agg')
+
+
 class HexadecimalHeap:
     def __init__(self):
         self.heap = []
@@ -29,18 +31,19 @@ class HexadecimalHeap:
         smallest = index
         for i in range(1, 16):
             child = 15 * index + i
-        if child < len(self.heap) and self.heap[child][0] < self.heap[smallest][0]:
-            smallest = child
+            if child < len(self.heap) and self.heap[child][0] < self.heap[smallest][0]:
+                smallest = child
         if smallest != index:
             self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
             self._sift_down(smallest)
 
 
 class Graph15:
-    def __init__(self):
+    def __init__(self, num_vertices=None):
         self.nodes = set()
         self.edges = {}
         self.distances = {}
+        self.num_vertices = num_vertices
 
     def add_node(self, value):
         self.nodes.add(value)
@@ -59,7 +62,7 @@ class Graph15:
         heap = HexadecimalHeap()
         heap.push((0, initial_node))
         while heap.heap:
-            (current_weight, min_node) = heap.pop()
+            current_weight, min_node = heap.pop()
             if current_weight > visited[min_node]:
                 continue
             for edge in self.edges[min_node]:
@@ -85,8 +88,9 @@ class Graph15:
         for i in range(num_nodes):
             for j in range(i + 1, num_nodes):
                 distance = random.randint(1, 10)
-                self.add_edge(str(i), str(j), distance)
-                self.add_edge(str(j), str(i), distance)
+                # Проверяем, что ребро еще не добавлено
+                if str(j) not in self.edges[str(i)]:
+                    self.add_edge(str(i), str(j), distance)
 
     def visualize_graph(self):
         G = nx.Graph()
