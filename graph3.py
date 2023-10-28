@@ -2,8 +2,8 @@ import random
 import networkx as nx
 import matplotlib
 import matplotlib.pyplot as plt
+import timeit
 matplotlib.use('Qt5Agg')
-
 
 class TernaryHeap:
     def __init__(self):
@@ -72,16 +72,28 @@ class Graph3:
                     visited[edge] = weight
                     heap.push((weight, edge))
         return visited
-
+    
     def generate_random_graph(self, num_nodes, num_edges):
-        self.add_node('0')
-        for i in range(1, num_nodes):
+        for i in range(num_nodes):
             self.add_node(str(i))
-        available_edges = [(str(i), str(j)) for i in range(num_nodes) for j in range(num_nodes) if i != j]
-        random.shuffle(available_edges)
-        for k in range(num_edges):
-            edge = available_edges[k]
-            self.add_edge(edge[0], edge[1], random.randint(1, 10))
+        
+        available_nodes = [str(i) for i in range(num_nodes)]
+        
+        for _ in range(num_edges):
+            if available_nodes:
+                index1 = random.randint(0, len(available_nodes) - 1)
+                node1 = available_nodes[index1]
+                
+                if available_nodes:
+                    index2 = random.randint(0, len(available_nodes) - 1)
+                    node2 = available_nodes[index2]
+                    
+                    self.add_edge(node1, node2, random.randint(1, 10))
+
+
+
+
+
 
     def generate_complete_graph(self, num_nodes):
         for i in range(num_nodes):
@@ -89,8 +101,7 @@ class Graph3:
         for i in range(num_nodes):
             for j in range(i + 1, num_nodes):
                 distance = random.randint(1, 10)
-                if str(j) not in self.edges[str(i)]:
-                    self.add_edge(str(i), str(j), distance)
+                self.add_edge(str(i), str(j), distance)
 
     def visualize_graph(self):
         G = nx.Graph()
