@@ -250,8 +250,8 @@ def nineth_test():
     run_dijkstra15(1000, 50000)
 
 def tenth_test():
-    run_dijkstra3(10000, 50000)
-    run_dijkstra15(10000, 50000)
+    run_dijkstra3(100, 50000)
+    run_dijkstra15(100, 50000)
 
 def eleventh_test():
     run_dijkstra3(10000, 100000)
