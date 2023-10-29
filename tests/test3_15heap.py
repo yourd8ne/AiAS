@@ -2,7 +2,6 @@ from graph3 import Graph3
 from graph15 import Graph15
 import random
 import timeit
-import time
 import matplotlib.pyplot as plt
 import matplotlib
 
@@ -51,16 +50,16 @@ def run_dijkstra15(num_vertices, num_edges):
         print(f"15-куча {num_vertices},{num_edges}:\n   Execution Time: {execution_time:.6f} seconds".format(execution_time))
 
 def third_test():
-    run_dijkstra3(10, 10)
-    run_dijkstra15(10, 10)
+    run_dijkstra3(1000, 10)
+    run_dijkstra15(1000, 10)
 
 def fourth_test():
-     run_dijkstra3(10, 100)
-     run_dijkstra15(10, 100)
+     run_dijkstra3(1000, 100)
+     run_dijkstra15(1000, 100)
 
-def fiveth_test():
-    run_dijkstra3(100, 1000)
-    run_dijkstra15(100, 1000)
+def fifth_test():
+    run_dijkstra3(1000, 1000)
+    run_dijkstra15(1000, 1000)
     
 def sixth_test():
     run_dijkstra3(1000, 500)
@@ -70,25 +69,37 @@ def seventh_test():
     run_dijkstra3(1000, 1000)
     run_dijkstra15(1000, 1000)
 
-def eight_test():
+def eighth_test():
     run_dijkstra3(1000, 5000)
     run_dijkstra15(1000, 5000)
 
-def nineth_test():
+def ninth_test():
     run_dijkstra3(1000, 50000)
     run_dijkstra15(1000, 50000)
 
 def tenth_test():
-    run_dijkstra3(100, 50000)
-    run_dijkstra15(100, 50000)
+    run_dijkstra3(1000, 50000)
+    run_dijkstra15(1000, 50000)
 
 def eleventh_test():
     run_dijkstra3(1000, 25000)
     run_dijkstra15(1000, 25000)
 
-def twelve_test():
-    run_dijkstra3(10000, 500000)
-    run_dijkstra15(10000, 500000)
+def twelfth_test():
+    # run_dijkstra3(1000, 10000)
+    run_dijkstra15(1000, 10000)
+
+def thirteenth_test():
+    # run_dijkstra3(1000, 75000)
+    run_dijkstra15(1000, 75000)
+    
+def fourteenth_test():
+    run_dijkstra15(1000, 75000)
+    run_dijkstra3(1000, 75000)
+
+def fifteenth_test():
+    run_dijkstra15(1000, 100000)
+    run_dijkstra3(1000, 100000)
 
 def test_rand():
     g3 = Graph3()
