@@ -1,7 +1,7 @@
 from graph3 import Graph3
 from graph15 import Graph15
 
-def first_test():
+def dijkstra1():
     g3 = Graph3(8)
     g3.add_node('A')
     g3.add_node('B')
@@ -50,7 +50,7 @@ def first_test():
     shortest_paths = g15.dijkstra('A')
     print(shortest_paths)
 
-def second_test():
+def dijkstra2():
     g3 = Graph3(26)
     g15 = Graph15(26)
     g3.add_node('A')
