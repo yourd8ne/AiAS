@@ -4,139 +4,168 @@ import random
 import timeit
 import matplotlib.pyplot as plt
 import matplotlib
-import csv
 import os
 
-def write_to_csv(results, filename):
-    with open(filename, 'w', newline='') as csvfile:
-        fieldnames = ['n', 'm', 'result']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for result in results:
-            writer.writerow(result)
-
-def write_results_to_csv(results, function_name):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    filename = os.path.join(current_dir, f'{function_name}_results.csv')
-    write_to_csv(results, filename)
 
 def run_dijkstra3(num_vertices, num_edges, q, r):
-        graph = Graph3(num_vertices)
-        
-        # Добавление вершин
-        for vertex in range(num_vertices):
-            graph.add_node(vertex)
-        
-        # Добавление ребер
-        for vertex in range(num_vertices):
-            for _ in range(num_edges):
-                to_node = random.randint(0, num_vertices-1)
-                distance = random.randint(q, r)
-                graph.add_edge(vertex, to_node, distance)
-        
-        # Замер времени выполнения
-        def run_algorithm():
-            initial_node = 0
-            return graph.dijkstra(initial_node)
-        
-        execution_time = timeit.timeit(run_algorithm, number=1)
-        formatted_execution_time = f"{num_vertices}, {num_edges}, [{q},{r}] 3-куча "+"{:.2f}".format(execution_time)
-        print(f"3-куча {num_vertices},{num_edges}:\n    Execution Time: {formatted_execution_time} seconds")
+    graph = Graph3(num_vertices)
+    
+    # Добавление вершин
+    for vertex in range(num_vertices):
+        graph.add_node(vertex)
+    
+    # Добавление ребер
+    for vertex in range(num_vertices):
+        for _ in range(num_edges):
+            to_node = random.randint(0, num_vertices-1)
+            distance = random.randint(q, r)
+            graph.add_edge(vertex, to_node, distance)
+    
+    # Замер времени выполнения
+    def run_algorithm():
+        initial_node = 0
+        return graph.dijkstra(initial_node)
+    
+    execution_time = timeit.timeit(run_algorithm, number=1)
+    formatted_execution_time = "{:.2f}".format(execution_time)
+    result =  f"3-куча {num_vertices} вершин, {num_edges} ребер, диапазон мощности [{q}, {r}]:\n    Время выполнения: {formatted_execution_time} с\n"
+    with open(r"D:\code\AiAs\res.txt", "a", encoding='utf-8') as file:
+        file.write(result)
+
 
 def run_dijkstra15(num_vertices, num_edges, q, r):
-        graph = Graph15(num_vertices)
-        
-        # Добавление вершин
-        for vertex in range(num_vertices):
-            graph.add_node(vertex)
-        
-        # Добавление ребер
-        for vertex in range(num_vertices):
-            for _ in range(num_edges):
-                to_node = random.randint(0, num_vertices-1)
-                distance = random.randint(q, r)
-                graph.add_edge(vertex, to_node, distance)
-        
-        # Замер времени выполнения
-        def run_algorithm():
-            initial_node = 0
-            return graph.dijkstra(initial_node)
-        
-        execution_time = timeit.timeit(run_algorithm, number=1)
-        formatted_execution_time = f"{num_vertices}, {num_edges},[{q},{r}] 15-куча "+"{:.2f}".format(execution_time)
-        print(f"15-куча {num_vertices},{num_edges}:\n   Execution Time: {formatted_execution_time} seconds")
+    graph = Graph15(num_vertices)
+    
+    # Добавление вершин
+    for vertex in range(num_vertices):
+        graph.add_node(vertex)
+    
+    # Добавление ребер
+    for vertex in range(num_vertices):
+        for _ in range(num_edges):
+            to_node = random.randint(0, num_vertices-1)
+            distance = random.randint(q, r)
+            graph.add_edge(vertex, to_node, distance)
+    
+    # Замер времени выполнения
+    def run_algorithm():
+        initial_node = 0
+        return graph.dijkstra(initial_node)
+    
+    execution_time = timeit.timeit(run_algorithm, number=1)
+    formatted_execution_time = "{:.2f}".format(execution_time)
+    result = f"15-куча {num_vertices} вершин, {num_edges} ребер, диапазон мощности [{q}, {r}]:\n    Время выполнения: {formatted_execution_time} с\n"
+    with open(r"D:\code\AiAs\res.txt", "a", encoding='utf-8') as file:
+        file.write(result)
+
+
 
 def first_test_a():
     results = []
-    for n in range(1, 10000, 100):
+    for n in range(1750, 10000, 250):
         m = int(n**2/10)
-        result = run_dijkstra3(n, m, 1, 1000000)
-        results.append({'n': n, 'm': m, 'result': result})
-    write_results_to_csv(results, 'function_a')
+        run_dijkstra3(n, m, 1, 1000000)
+        run_dijkstra15(n, m, 1, 1000000)
+        # results.append({'n': n, 'm': m, 'result': result})
+    
 
 def first_test_b():
     results = []
-    for n in range(1, 10000, 100):
+    for n in range(1, 10000, 250):
         m = n**2
-        result = run_dijkstra15(n, m, 1, 1000000)
-        results.append({'n': n, 'm': m, 'result': result})
-    write_results_to_csv(results, 'function_b')
+        run_dijkstra15(n, m, 1, 1000000)
+        run_dijkstra15(n, m, 1, 1000000)
+        # results.append({'n': n, 'm': m, 'result': result})
+    
 
-def second_test():
-    # ;lsgdsgdgks
-    print("hi")
+def second_test_a():
+    results = []
+    for n in range(1, 10000, 250):
+        m = 100*n
+        run_dijkstra3(n, m, 1, 1000000)
+        run_dijkstra15(n, m, 1, 1000000)
+        # results.append({'n': n, 'm': m, 'result': result})
+    
+
+def second_test_b():
+    results = []
+    for n in range(1, 10000, 250):
+        m = 1000*n
+        run_dijkstra3(n, m, 1, 1000000)
+        run_dijkstra15(n, m, 1, 1000000)
+        # results.append({'n': n, 'm': m, 'result': result})
+    
 
 def third_test():
-    #run_dijkstra3(1000, 10)
-    run_dijkstra15(1000, 10, 1, 1000000)
-
-def fourth_test():
-     run_dijkstra3(1000, 100)
-     run_dijkstra15(1000, 100)
-
-def fifth_test():
-    run_dijkstra3(1000, 1000)
-    run_dijkstra15(1000, 1000)
+    results = []
+    for n in range(1, 10000, 250):
+        for m in range(0, 10000000, 100000):
+            run_dijkstra3(n, m, 1, 1000000)
+            run_dijkstra15(n, m, 1, 1000000)
+            # results.append({'n': n, 'm': m, 'result': result})
     
-def sixth_test():
-    run_dijkstra3(1000, 500)
-    run_dijkstra15(1000, 500)
 
-def seventh_test():
-    run_dijkstra3(1000, 1000)
-    run_dijkstra15(1000, 1000)
-
-def eighth_test():
-    run_dijkstra3(1000, 5000)
-    run_dijkstra15(1000, 5000)
-
-def ninth_test():
-    run_dijkstra3(1000, 50000)
-    run_dijkstra15(1000, 50000)
-
-def tenth_test():
-    run_dijkstra3(1000, 50000)
-    run_dijkstra15(1000, 50000)
-
-def eleventh_test():
-    run_dijkstra3(1000, 25000)
-    run_dijkstra15(1000, 25000)
-
-def twelfth_test():
-    # run_dijkstra3(1000, 10000)
-    run_dijkstra15(1000, 10000)
-
-def thirteenth_test():
-    # run_dijkstra3(1000, 75000)
-    run_dijkstra15(1000, 75000)
+def fourth_test_a():
+    results = []
+    for n in range(1, 10000, 250):
+        for r in range(1, 200, 1):
+            m = n**2
+            run_dijkstra3(n, m, 1, 1000000)
+            run_dijkstra15(n, m, 1, 1000000)
+            # results.append({'n': n, 'm': m, 'result': result})
     
-def fourteenth_test():
-    run_dijkstra15(1000, 75000)
-    run_dijkstra3(1000, 75000)
 
-def fifteenth_test():
-    run_dijkstra15(1000, 100000)
-    run_dijkstra3(1000, 100000)
+def fourth_test_b():
+    for n in range(1, 10000, 250):
+        for r in range(1, 200, 1):
+            m = 1000*n
+            run_dijkstra3(n, m, 1, r)
+            run_dijkstra15(n, m, 1, r)
+        
+
+# def fifth_test():
+#     run_dijkstra3(1000, 1000)
+#     run_dijkstra15(1000, 1000)
+    
+# def sixth_test():
+#     run_dijkstra3(1000, 500)
+#     run_dijkstra15(1000, 500)
+
+# def seventh_test():
+#     run_dijkstra3(1000, 1000)
+#     run_dijkstra15(1000, 1000)
+
+# def eighth_test():
+#     run_dijkstra3(1000, 5000)
+#     run_dijkstra15(1000, 5000)
+
+# def ninth_test():
+#     run_dijkstra3(1000, 50000)
+#     run_dijkstra15(1000, 50000)
+
+# def tenth_test():
+#     run_dijkstra3(1000, 50000)
+#     run_dijkstra15(1000, 50000)
+
+# def eleventh_test():
+#     run_dijkstra3(1000, 25000)
+#     run_dijkstra15(1000, 25000)
+
+# def twelfth_test():
+#     # run_dijkstra3(1000, 10000)
+#     run_dijkstra15(1000, 10000)
+
+# def thirteenth_test():
+#     # run_dijkstra3(1000, 75000)
+#     run_dijkstra15(1000, 75000)
+    
+# def fourteenth_test():
+#     run_dijkstra15(1000, 75000)
+#     run_dijkstra3(1000, 75000)
+
+# def fifteenth_test():
+#     run_dijkstra15(1000, 100000)
+#     run_dijkstra3(1000, 100000)
 
 def test_rand():
     g3 = Graph3()

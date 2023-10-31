@@ -5,10 +5,13 @@ from tests.showTime import *
 		
 if __name__ == '__main__':
 
-    first_test_a()
-    # second_test()
+    # first_test_a()
+    first_test_b()
+    # second_test_a()
+    # second_test_b()
     # third_test()
-    # fourth_test()
+    # fourth_test_a()
+    # fourth_test_b()
     # fifth_test()
     # sixth_test()
     # seventh_test()
@@ -21,4 +24,4 @@ if __name__ == '__main__':
     # fourteenth_test()
     # test_rand()
     # test_poln(100)
-    #showTime()
+    # showTime()
