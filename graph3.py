@@ -89,12 +89,7 @@ class Graph3:
                     node2 = available_nodes[index2]
                     
                     self.add_edge(node1, node2, random.randint(1, 10))
-
-
-
-
-
-
+                    
     def generate_complete_graph(self, num_nodes):
         for i in range(num_nodes):
             self.add_node(str(i))

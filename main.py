@@ -5,8 +5,9 @@ from tests.showTime import *
 		
 if __name__ == '__main__':
 
-    # first_test_a()
-    first_test_b()
+    res_file_1_a = "D:\\code\\AiAS\\first_test_a.txt"
+    first_test_a(res_file_1_a)
+    # first_test_b()
     # second_test_a()
     # second_test_b()
     # third_test()
@@ -25,3 +26,5 @@ if __name__ == '__main__':
     # test_rand()
     # test_poln(100)
     # showTime()
+   
+    
