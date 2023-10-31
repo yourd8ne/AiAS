@@ -1,5 +1,5 @@
 from graph3 import Graph3
-from graph15 import Graph15
+from graph15 import Graph16
 
 def dijkstra1():
     g3 = Graph3(8)

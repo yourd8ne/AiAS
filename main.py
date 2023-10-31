@@ -4,15 +4,26 @@ from tests.showTime import *
 		
 		
 if __name__ == '__main__':
+    
+    
+    first_test_a()
+    first_test_b()
+    second_test_a()
+    second_test_b()
+    third_test()
+    fourth_test_a()
+    fourth_test_b()
+    # results_file = "res_1a.txt"
+    # data3, data15 = parse_results(results_file)
+    # results_file = "res_1a.txt"
+    # plot_results(results_file)
 
-    res_file_1_a = "D:\\code\\AiAS\\first_test_a.txt"
-    first_test_a(res_file_1_a)
-    # first_test_b()
-    # second_test_a()
-    # second_test_b()
-    # third_test()
-    # fourth_test_a()
-    # fourth_test_b()
+
+
+
+
+
+
     # fifth_test()
     # sixth_test()
     # seventh_test()
