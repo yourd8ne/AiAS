@@ -6,9 +6,10 @@ import time
 import matplotlib.pyplot as plt
 import matplotlib
 import gc
-import os
+# import os
 import re
-# import numpy as np
+import csv
+
 
 def toFixed(numObj, digits=0):
     return f"{numObj:.{digits}f}"
@@ -36,10 +37,17 @@ def run_dijkstra3(num_vertices, num_edges, q, r, results_file):
         execution_time = end_time - start_time
         return execution_time
     
-    result = f"3-куча {num_vertices} вершин, {num_edges} ребер, диапазон мощности [{q}, {r}]:\n    Время выполнения: {toFixed(run_algorithm(), 2)} с\n"
+    result = [
+        f"3-куча",
+        {num_vertices},
+        {num_edges},
+        [{q}, {r}],
+        toFixed(run_algorithm(), 2)
+    ]
     
-    with open(results_file, "a", encoding='utf-8') as file:
-        file.write(result)
+    with open(results_file, "a", encoding='utf-8', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(result)
     
     del graph
     gc.collect()
@@ -67,17 +75,24 @@ def run_dijkstra15(num_vertices, num_edges, q, r, results_file):
         execution_time = end_time - start_time
         return execution_time
     
-    result = f"15-куча {num_vertices} вершин, {num_edges} ребер, диапазон мощности [{q}, {r}]:\n    Время выполнения: {toFixed(run_algorithm(), 2)} с\n"
+    result = [
+        f"15-куча",
+        {num_vertices},
+        {num_edges},
+        [{q}, {r}],
+        toFixed(run_algorithm(), 2)
+    ]
     
-    with open(results_file, "a", encoding='utf-8') as file:
-        file.write(result)
+    with open(results_file, "a", encoding='utf-8', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(result)
     
     del graph
     gc.collect()
 
 
 def first_test_a():
-    results_file = "res_1a.txt"
+    results_file = "res_1a.csv"
     for n in range(1, 10001, 250):
         m = int(n ** 2 / 10)
         run_dijkstra3(n, m, 1, 1000000, results_file)
@@ -85,7 +100,7 @@ def first_test_a():
         gc.collect()  # Вручную вызывается сборщик мусора после каждого запуска
 
 def first_test_b():
-    results_file = "res_1b.txt"
+    results_file = "res_1b.csv"
     for n in range(1, 10001, 250):
         m = n**2
         run_dijkstra15(n, m, 1, 1000000, results_file)
@@ -93,7 +108,7 @@ def first_test_b():
         gc.collect()  # Manually invoke the garbage collector after each run
 
 def second_test_a():
-    results_file = "res_2a.txt"
+    results_file = "res_2a.csv"
     for n in range(1, 10001, 250):
         m = 100*n
         run_dijkstra3(n, m, 1, 1000000, results_file)
@@ -103,7 +118,7 @@ def second_test_a():
     
 
 def second_test_b():
-    results_file = "res_2b.txt"
+    results_file = "res_2b.csv"
     for n in range(1, 10001, 250):
         m = 1000*n
         run_dijkstra3(n, m, 1, 1000000, results_file)
@@ -112,33 +127,34 @@ def second_test_b():
     
 
 def third_test():
-    results_file = "res_3.txt"
-    for n in range(1, 10001, 250):
-        for m in range(0, 10000000, 100000):
-            run_dijkstra3(n, m, 1, 1000000, results_file)
-            run_dijkstra15(n, m, 1, 1000000, results_file)
-            gc.collect()
+    results_file = "res_3.csv"
+    n = 10000 + 1
+    for m in range(0, 10000000, 100000):
+        run_dijkstra3(n, m, 1, 1000000, results_file)
+        run_dijkstra15(n, m, 1, 1000000, results_file)
+        gc.collect()
     
 
 def fourth_test_a():
-    results_file = "res_4a.txt"
-    for n in range(1, 10001, 250):
-        for r in range(1, 200, 1):
-            m = n**2
-            run_dijkstra3(n, m, 1, 1000000, results_file)
-            run_dijkstra15(n, m, 1, 1000000, results_file)
-            gc.collect()
+    results_file = "res_4a.csv"
+    n = 10000 + 1
+    for r in range(1, 200, 1):
+        m = n**2
+        run_dijkstra3(n, m, 1, 1000000, results_file)
+        run_dijkstra15(n, m, 1, 1000000, results_file)
+        gc.collect()
 
     
 
 def fourth_test_b():
-    results_file = "res_4b.txt"
-    for n in range(1, 10001, 250):
-        for r in range(1, 200, 1):
-            m = 1000*n
-            run_dijkstra3(n, m, 1, r)
-            run_dijkstra15(n, m, 1, r)
-            gc.collect()
+    results_file = "res_4b.csv"
+    n = 10000 + 1
+    for r in range(1, 200, 1):
+        m = 1000*n
+        run_dijkstra3(n, m, 1, r, results_file)
+        run_dijkstra15(n, m, 1, r, results_file)
+        gc.collect()
+
 
 def parse_results(results_file):
     data_3 = []
@@ -146,25 +162,22 @@ def parse_results(results_file):
     with open(results_file, "r", encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
-            if line.startswith("3-куча"):
-                match = re.search(r"Время выполнения: ([\d.]+)", line)
-                if match:
-                    try:
-                        data_3.append(float(match.group(1)))
-                    except ValueError:
-                        continue
-            elif line.startswith("15-куча"):
-                match = re.search(r"Время выполнения: ([\d.]+)", line)
-                if match:
-                    try:
-                        data_15.append(float(match.group(1)))
-                    except ValueError:
-                        continue
+            match = re.search(r"\d+-куча (\d+) вершин, (\d+) ребер.*\n.*Время выполнения: ([\d.]+) с", line)
+            if match:
+                try:
+                    vertices = int(match.group(1))
+                    edges = int(match.group(2))
+                    execution_time = float(match.group(3))
+                    if vertices > 0 or edges >= 0:
+                        if "3-куча" in line:
+                            data_3.append(execution_time)
+                        elif "15-куча" in line:
+                            data_15.append(execution_time)
+                except (ValueError, IndexError):
+                    continue
     print(data_3)
     print(data_15)
     return data_3, data_15
-
-
 
 def plot_results(results_file):
     data_3, data_15 = parse_results(results_file)

@@ -26,7 +26,7 @@ def dijkstra1():
     shortest_paths = g3.dijkstra('A')
     print(shortest_paths)
     
-    g15 = Graph15(8)
+    g15 = Graph16(8)
     g15.add_node('A')
     g15.add_node('B')
     g15.add_node('C')
