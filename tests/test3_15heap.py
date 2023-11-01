@@ -39,9 +39,9 @@ def run_dijkstra3(num_vertices, num_edges, q, r, results_file):
     
     result = [
         f"3-куча",
-        {num_vertices},
-        {num_edges},
-        [{q}, {r}],
+        num_vertices,
+        num_edges,
+        [q, r],
         toFixed(run_algorithm(), 2)
     ]
     
@@ -77,9 +77,9 @@ def run_dijkstra15(num_vertices, num_edges, q, r, results_file):
     
     result = [
         f"15-куча",
-        {num_vertices},
-        {num_edges},
-        [{q}, {r}],
+        num_vertices,
+        num_edges,
+        [q, r],
         toFixed(run_algorithm(), 2)
     ]
     
@@ -93,7 +93,7 @@ def run_dijkstra15(num_vertices, num_edges, q, r, results_file):
 
 def first_test_a():
     results_file = "res_1a.csv"
-    for n in range(1, 10001, 250):
+    for n in range(6501, 10001, 250):
         m = int(n ** 2 / 10)
         run_dijkstra3(n, m, 1, 1000000, results_file)
         run_dijkstra15(n, m, 1, 1000000, results_file)
@@ -103,7 +103,7 @@ def first_test_b():
     results_file = "res_1b.csv"
     for n in range(1, 10001, 250):
         m = n**2
-        run_dijkstra15(n, m, 1, 1000000, results_file)
+        run_dijkstra3(n, m, 1, 1000000, results_file)
         run_dijkstra15(n, m, 1, 1000000, results_file)
         gc.collect()  # Manually invoke the garbage collector after each run
 
@@ -156,45 +156,28 @@ def fourth_test_b():
         gc.collect()
 
 
-def parse_results(results_file):
-    data_3 = []
-    data_15 = []
-    with open(results_file, "r", encoding='utf-8') as file:
-        lines = file.readlines()
-        for line in lines:
-            match = re.search(r"\d+-куча (\d+) вершин, (\d+) ребер.*\n.*Время выполнения: ([\d.]+) с", line)
-            if match:
-                try:
-                    vertices = int(match.group(1))
-                    edges = int(match.group(2))
-                    execution_time = float(match.group(3))
-                    if vertices > 0 or edges >= 0:
-                        if "3-куча" in line:
-                            data_3.append(execution_time)
-                        elif "15-куча" in line:
-                            data_15.append(execution_time)
-                except (ValueError, IndexError):
-                    continue
-    print(data_3)
-    print(data_15)
-    return data_3, data_15
+def parse_csv_file(file_path):
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if len(row) >= 5:
+                algorithm = row[0]
+                edge_count = int(row[1])
+                vertex_count = int(row[2])
+                range_values = eval(row[3])
+                time = float(row[4])
+                data.append((algorithm, edge_count, vertex_count, range_values, time))
+    return data
 
-def plot_results(results_file):
-    data_3, data_15 = parse_results(results_file)
-    
-    # Генерация входных данных
-    x = range(1, len(data_3) + 1)
-    
-    # Построение графика
-    plt.plot(x, data_3, label="3-куча")
-    plt.plot(x, data_15, label="15-куча")
-    
-    # Настройка осей и легенды
-    plt.xlabel("Входные данные")
-    plt.ylabel("Время выполнения (с)")
-    plt.legend()
-    
-    # Отображение графика
+
+def plot_graph(data, algorithm):
+    x = [item[1] for item in data if item[0] == algorithm]
+    y = [item[4] for item in data if item[0] == algorithm]
+    plt.plot(x, y)
+    plt.xlabel('Number of Edges and Vertices')
+    plt.ylabel('Time')
+    plt.title(f'Graph for {algorithm}')
     plt.show()
 
 # def get_execution_time_from_file(results_file, search_string):

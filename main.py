@@ -12,10 +12,10 @@ if __name__ == '__main__':
     
     processes = [
         multiprocessing.Process(target=run_test, args=(first_test_a,)),
-        multiprocessing.Process(target=run_test, args=(first_test_b,)),
-        multiprocessing.Process(target=run_test, args=(second_test_a,)),
-        multiprocessing.Process(target=run_test, args=(second_test_b,)),
-        multiprocessing.Process(target=run_test, args=(third_test,))
+        multiprocessing.Process(target=run_test, args=(first_test_b,))
+        # multiprocessing.Process(target=run_test, args=(second_test_a,)),
+        # multiprocessing.Process(target=run_test, args=(second_test_b,)),
+        # multiprocessing.Process(target=run_test, args=(third_test,))
         # multiprocessing.Process(target=run_test, args=(fourth_test_a,)),
         # multiprocessing.Process(target=run_test, args=(fourth_test_b,))
     ]
@@ -26,6 +26,15 @@ if __name__ == '__main__':
     for process in processes:
         process.join()
 
+
+    # file_path = 'res_1a.csv'
+    # parsed_data = parse_csv_file(file_path)
+
+    # algorithm_3_heap = '3-куча'
+    # algorithm_15_heap = '15-куча'
+
+    # plot_graph(parsed_data, algorithm_3_heap)
+    # plot_graph(parsed_data, algorithm_15_heap)
     # first_test_a()
     # first_test_b()
     # second_test_a()
