@@ -11,10 +11,10 @@ def run_test(test_func):
 if __name__ == '__main__':
     
     processes = [
-        multiprocessing.Process(target=run_test, args=(first_test_a,)),
-        multiprocessing.Process(target=run_test, args=(first_test_b,))
+        # multiprocessing.Process(target=run_test, args=(first_test_a,)),
+        # multiprocessing.Process(target=run_test, args=(first_test_b,))
         # multiprocessing.Process(target=run_test, args=(second_test_a,)),
-        # multiprocessing.Process(target=run_test, args=(second_test_b,)),
+        # multiprocessing.Process(target=run_test, args=(second_test_b,))
         # multiprocessing.Process(target=run_test, args=(third_test,))
         # multiprocessing.Process(target=run_test, args=(fourth_test_a,)),
         # multiprocessing.Process(target=run_test, args=(fourth_test_b,))
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     # first_test_b()
     # second_test_a()
     # second_test_b()
-    # third_test()
+    third_test()
     # fourth_test_a()
     # fourth_test_b()
     # results_file = "res_1a.txt"

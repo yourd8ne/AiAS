@@ -1,23 +1,32 @@
-import random
-import networkx as nx
-import matplotlib
-import matplotlib.pyplot as plt
-import timeit
-matplotlib.use('Qt5Agg')
+# import random
+# import networkx as nx
+# import matplotlib
+# import matplotlib.pyplot as plt
+# import timeit
+# matplotlib.use('Qt5Agg')
 
 class TernaryHeap:
-    def __init__(self):
-        self.heap = []
+    def __init__(self, size):
+        self.heap = [None] * size
+        self.size = size
+        self.current_size = 0
 
     def push(self, value):
-        self.heap.append(value)
-        self._sift_up(len(self.heap) - 1)
+        if self.current_size >= self.size:
+            return "Куча заполнена"
+        
+        self.heap[self.current_size] = value
+        self._sift_up(self.current_size)
+        self.current_size += 1
 
     def pop(self):
-        if len(self.heap) == 1:
-            return self.heap.pop()
+        if self.current_size == 0:
+            return None
+        
         value = self.heap[0]
-        self.heap[0] = self.heap.pop()
+        self.current_size -= 1
+        self.heap[0] = self.heap[self.current_size]
+        self.heap[self.current_size] = None
         self._sift_down(0)
         return value
 
@@ -26,22 +35,15 @@ class TernaryHeap:
         if parent >= 0 and self.heap[index][0] < self.heap[parent][0]:
             self.heap[index], self.heap[parent] = self.heap[parent], self.heap[index]
             self._sift_up(parent)
-
     def _sift_down(self, index):
-        child1 = 3 * index + 1
-        child2 = child1 + 1
-        child3 = child2 + 1
         smallest = index
-        if child1 < len(self.heap) and self.heap[child1][0] < self.heap[smallest][0]:
-            smallest = child1
-        if child2 < len(self.heap) and self.heap[child2][0] < self.heap[smallest][0]:
-            smallest = child2
-        if child3 < len(self.heap) and self.heap[child3][0] < self.heap[smallest][0]:
-            smallest = child3
+        for i in range(1, 4):
+            child = 3 * index + i
+            if child < self.current_size and self.heap[child][0] < self.heap[smallest][0]:
+                smallest = child
         if smallest != index:
             self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
             self._sift_down(smallest)
-
 
 class Graph3:
     def __init__(self, num_vertices=None):
@@ -64,9 +66,9 @@ class Graph3:
         if initial_node not in self.edges:
             return f"Нет ребер, исходящих из узла {initial_node}"
         visited = {initial_node: 0}
-        heap = TernaryHeap()
+        heap = TernaryHeap(size=self.num_vertices)
         heap.push((0, initial_node))
-        while heap.heap:
+        while heap.current_size > 0:
             current_weight, min_node = heap.pop()
             if current_weight != visited[min_node]:
                 continue

@@ -93,7 +93,7 @@ def run_dijkstra15(num_vertices, num_edges, q, r, results_file):
 
 def first_test_a():
     results_file = "res_1a.csv"
-    for n in range(6501, 10001, 250):
+    for n in range(1, 10001, 250):
         m = int(n ** 2 / 10)
         run_dijkstra3(n, m, 1, 1000000, results_file)
         run_dijkstra15(n, m, 1, 1000000, results_file)
