@@ -129,7 +129,7 @@ def second_test_b():
 def third_test():
     results_file = "res_3.csv"
     n = 10000 + 1
-    for m in range(0, 10000000, 100000):
+    for m in range(2000000, 10000000, 1000000):
         run_dijkstra3(n, m, 1, 1000000, results_file)
         run_dijkstra15(n, m, 1, 1000000, results_file)
         gc.collect()

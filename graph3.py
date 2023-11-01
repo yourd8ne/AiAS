@@ -1,9 +1,6 @@
-# import random
-# import networkx as nx
-# import matplotlib
-# import matplotlib.pyplot as plt
-# import timeit
-# matplotlib.use('Qt5Agg')
+import numpy as np
+import scipy.sparse as sp
+
 
 class TernaryHeap:
     def __init__(self, size):
@@ -49,7 +46,7 @@ class Graph3:
     def __init__(self, num_vertices=None):
         self.nodes = set()
         self.edges = {}
-        self.distances = {}
+        self.distances = None
         self.num_vertices = num_vertices
 
     def add_node(self, value):
@@ -58,27 +55,41 @@ class Graph3:
 
     def add_edge(self, from_node, to_node, distance):
         self.edges[from_node].append(to_node)
-        self.distances[(from_node, to_node)] = distance
+
+        if self.distances is None:
+            self.distances = sp.lil_matrix((self.num_vertices, self.num_vertices))
+        self.distances[from_node, to_node] = distance
 
     def dijkstra(self, initial_node):
         if initial_node not in self.nodes:
             return f"Узел {initial_node} отсутствует в графе"
         if initial_node not in self.edges:
             return f"Нет ребер, исходящих из узла {initial_node}"
-        visited = {initial_node: 0}
+
+        visited = np.inf * np.ones(self.num_vertices)
+        visited[initial_node] = 0
+
         heap = TernaryHeap(size=self.num_vertices)
         heap.push((0, initial_node))
+
         while heap.current_size > 0:
             current_weight, min_node = heap.pop()
+
             if current_weight != visited[min_node]:
                 continue
+
             if min_node not in self.edges:
                 continue
+
             for edge in self.edges[min_node]:
                 if edge not in visited:
-                    visited[edge] = float('inf')
-                weight = current_weight + self.distances[(min_node, edge)]
+                    continue
+
+                weight = current_weight + self.distances[min_node, edge]
+
                 if weight < visited[edge]:
                     visited[edge] = weight
                     heap.push((weight, edge))
+
         return visited
+
