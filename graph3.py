@@ -55,97 +55,94 @@ class TernaryHeap:
 
 
 class Graph3:
-    def __init__(self, num_vertices):
-        self.num_vertices = num_vertices
-        self.edges = defaultdict(list)
-        self.distances = np.zeros((num_vertices, num_vertices))
-        self.nodes = set() 
-    
-    def reset(self):
-        self.edges.clear()
-        self.distances = None
+    def __init__(self):
+        self.vertices = {}
+        self.edges = {}
 
-    def add_vertex(self):
-        if self.distances is None:
-            self.num_vertices = 1
-            self.distances = np.zeros((self.num_vertices, self.num_vertices))
+    def add_vertex(self, vertex):
+        self.vertices[vertex] = []
+
+    def add_edge(self, source, destination, weight):
+        if source in self.vertices:
+            self.vertices[source].append(destination)
         else:
-            new_size = self.num_vertices + 1
-            new_distances = np.zeros((new_size, new_size))
-            new_distances[:self.num_vertices, :self.num_vertices] = self.distances
-            self.distances = new_distances
-            self.num_vertices = new_size
+            self.vertices[source] = [destination]
 
-    def add_node(self, value):
-        self.edges[value] = []
-        self.nodes.add(value)
-        
+        self.edges[(source, destination)] = weight
 
-    def add_edge(self, from_node, to_node, distance):
-        if self.distances is None:
-            self.distances = np.zeros((self.num_vertices, self.num_vertices))
-            
-        self.edges[from_node].append(to_node)
-        self.distances[from_node, to_node] = distance
+    def dijkstra(self, source):
+        # Инициализация расстояний до всех вершин как бесконечность
+        distance = {vertex: float('inf') for vertex in self.vertices}
+        # Расстояние до исходной вершины равно 0
+        distance[source] = 0
 
-    def dijkstra(self, initial_node):
-        if initial_node not in self.nodes:
-            return f"Узел {initial_node} отсутствует в графе"
-        if initial_node not in self.edges:
-            return f"Нет ребер, исходящих из узла {initial_node}"
-
-        visited = np.inf * np.ones(self.num_vertices)
-        visited[initial_node] = 0
-
-        heap = TernaryHeap(size=self.num_vertices)
-        heap.push((0, initial_node))
+        # Создание и инициализация пирамиды
+        heap = TernaryHeap(len(self.vertices))
+        for vertex in self.vertices:
+            heap.push((distance[vertex], vertex))
 
         while heap.current_size > 0:
-            current_weight, min_node = heap.pop()
+            # Извлечение вершины с наименьшим расстоянием из пирамиды
+            _, current_vertex = heap.pop()
 
-            if current_weight != visited[min_node]:
-                continue
+            # Проход по смежным вершинам
+            for neighbor in self.vertices[current_vertex]:
+                # Расчет нового расстояния до смежной вершины
+                new_distance = distance[current_vertex] + self.edges[(current_vertex, neighbor)]
+                # Если новое расстояние меньше текущего расстояния,
+                if new_distance < distance[neighbor]:
+                    # обновляем расстояние
+                    distance[neighbor] = new_distance
+                    # и добавляем вершину в пирамиду
+                    heap.push((new_distance, neighbor))
 
-            if min_node not in self.edges:
-                continue
+        return distance
 
-            for edge in self.edges[min_node]:
-                if edge not in visited:
-                    continue
+    def draw_graph(self):
+        G = nx.Graph()
 
-                weight = current_weight + self.distances[min_node, edge]
+        for vertex, edges in self.vertices.items():
+            G.add_node(vertex)
+        
+        edge_labels = {}
+        for (source, destination), weight in self.edges.items():
+            G.add_edge(source, destination, weight=weight)
+            edge_labels[(source, destination)] = weight
 
-                if weight < visited[edge]:
-                    visited[edge] = weight
-                    heap.push((weight, edge))
+        pos = nx.spring_layout(G)
+        labels = {vertex: vertex for vertex in G.nodes}
 
-        return visited
+        nx.draw(G, pos, with_labels=True)
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+        nx.draw_networkx_labels(G, pos, labels=labels)
 
-    def clean_up(self):
-        self.edges = []
-        self.vertices = []
+        plt.show()
 
-    def run_dijkstra3(self, num_edges, q, r, results_file):
-        num_vertices = self.num_vertices
-        # Добавление ребер
-        # Добавление ребер
-        for vertex in range(num_vertices):
-            for to_node in range(num_vertices):
-                if vertex != to_node:
-                    distance = random.randint(q, r)
-                    self.add_edge(vertex, to_node, distance)
+    def generate_graph(self, num_vertices, num_edges, weight_range, results_file):
+        for i in range(num_vertices):
+            self.add_vertex(i)
+
+        for i in range(num_edges):
+            source = random.randint(0, num_vertices - 1)
+            destination = random.randint(0, num_vertices - 1)
+            distance = random.randint(weight_range[0], weight_range[1])
+            if destination != 0 and destination != 1:
+                while source == destination:
+                    destination = random.randint(0, num_vertices - 1)
+            self.add_edge(source, destination, distance)
+
         initial_node = 0
         time = float(timeit.timeit(lambda: self.dijkstra(initial_node), number=1))
-        
+
         result = [
             f"3-куча",
             num_vertices,
             num_edges,
-            [q, r],
+            weight_range[0], weight_range[1],
             toFixed(time, 6)
         ]
-        
+
         with open(results_file, "a", encoding='utf-8', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(result)
-        self.clean_up()
+        
