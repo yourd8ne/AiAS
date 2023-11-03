@@ -1,6 +1,14 @@
 import numpy as np
 import scipy.sparse as sp
+import timeit
+import random
+import gc
+import csv
+from collections import defaultdict
 
+
+def toFixed(numObj, digits=0):
+    return f"{numObj:.{digits}f}"
 
 class HexadecimalHeap:
     def __init__(self, size):
@@ -44,21 +52,32 @@ class HexadecimalHeap:
             self._sift_down(smallest)
 
 class Graph16:
-    def __init__(self, num_vertices=None):
-        self.nodes = set()
-        self.edges = {}
-        self.distances = None
+    def __init__(self, num_vertices):
         self.num_vertices = num_vertices
+        self.edges = defaultdict(list)
+        self.distances = np.zeros((num_vertices, num_vertices))
+        self.nodes = set() 
+
+    def add_vertex(self):
+        if self.distances is None:
+            self.num_vertices = 1
+            self.distances = np.zeros((self.num_vertices, self.num_vertices))
+        else:
+            new_size = self.num_vertices + 1
+            new_distances = np.zeros((new_size, new_size))
+            new_distances[:self.num_vertices, :self.num_vertices] = self.distances
+            self.distances = new_distances
+            self.num_vertices = new_size
 
     def add_node(self, value):
         self.nodes.add(value)
         self.edges[value] = []
 
     def add_edge(self, from_node, to_node, distance):
-        self.edges[from_node].append(to_node)
-
         if self.distances is None:
-            self.distances = sp.lil_matrix((self.num_vertices, self.num_vertices))
+            self.distances = np.zeros((self.num_vertices, self.num_vertices))
+            
+        self.edges[from_node].append(to_node)
         self.distances[from_node, to_node] = distance
 
     def dijkstra(self, initial_node):
@@ -93,3 +112,32 @@ class Graph16:
                     heap.push((weight, edge))
 
         return visited
+    
+    def clean_up(self):
+        self.edges = []
+        self.vertices = []
+
+    def run_dijkstra15(self, num_edges, q, r, results_file):
+        num_vertices = self.num_vertices
+        # Добавление ребер
+        for vertex in range(num_vertices):
+            for to_node in range(num_vertices):
+                if vertex != to_node:
+                    distance = random.randint(q, r)
+                    self.add_edge(vertex, to_node, distance)
+        initial_node = 0
+        time = float(timeit.timeit(lambda: self.dijkstra(initial_node), number=1))
+        
+        result = [
+            f"15-куча",
+            num_vertices,
+            num_edges,
+            [q, r],
+            toFixed(time, 6)
+        ]
+        
+        with open(results_file, "a", encoding='utf-8', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(result)
+        self.clean_up()
+        
