@@ -4,7 +4,7 @@ import gc
 import random
 import time
 import csv
-
+import matplotlib as plt
 
 def toFixed(numObj, digits=0):
     return f"{numObj:.{digits}f}"
@@ -55,7 +55,7 @@ def second_test_b():
 def third_test():
     results_file = "res_3.csv"
     n = 10000 + 1
-    for m in range(3100000, 10000000, 100000):
+    for m in range(6000000, 10000000, 100000):
         g3 = Graph3()
         g15 = Graph15()
         g3.generate_graph(n, m, (1, 1000000), results_file)
@@ -187,48 +187,48 @@ def fourth_test_b():
 
 
 
-# def parse_csv_file(file_path):
-#     data = []
-#     with open(file_path, 'r', encoding='utf-8') as file:
-#         reader = csv.reader(file)
-#         for row in reader:
-#             if len(row) >= 5:
-#                 algorithm = row[0]
-#                 edge_count = int(row[1])
-#                 vertex_count = int(row[2])
-#                 range_values = eval(row[3])
-#                 time = float(row[4])
-#                 data.append((algorithm, edge_count, vertex_count, range_values, time))
-#     return data
+def parse_csv_file(file_path):
+    data = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if len(row) >= 5:
+                algorithm = row[0]
+                edge_count = int(row[1])
+                vertex_count = int(row[2])
+                range_values = eval(row[3])
+                time = float(row[4])
+                data.append((algorithm, edge_count, vertex_count, range_values, time))
+    return data
 
 
-# def plot_graph_vertex(data, algorithm):
-#     x = [item[1] for item in data if item[0] == algorithm]
-#     y = [item[4] for item in data if item[0] == algorithm]
-#     plt.plot(x, y)
-#     plt.xlabel('Number of Edges and Vertices')
-#     plt.ylabel('Time')
-#     plt.title(f'Graph for {algorithm}')
-#     plt.show()
+def plot_graph_vertex(data, algorithm):
+    x = [item[1] for item in data if item[0] == algorithm]
+    y = [item[4] for item in data if item[0] == algorithm]
+    plt.plot(x, y)
+    plt.xlabel('Number of Edges and Vertices')
+    plt.ylabel('Time')
+    plt.title(f'Graph for {algorithm}')
+    plt.show()
 
 
-# def plot_graph_edges(data, algorithm):
-#     x = [item[1] for item in data if item[0] == algorithm]
-#     y = [item[4] for item in data if item[0] == algorithm]
-#     plt.plot(x, y)
-#     plt.xlabel('Number of Edges')
-#     plt.ylabel('Time')
-#     plt.title(f'Graph for {algorithm} - Edges')
-#     plt.show()
+def plot_graph_edges(data, algorithm):
+    x = [item[1] for item in data if item[0] == algorithm]
+    y = [item[4] for item in data if item[0] == algorithm]
+    plt.plot(x, y)
+    plt.xlabel('Number of Edges')
+    plt.ylabel('Time')
+    plt.title(f'Graph for {algorithm} - Edges')
+    plt.show()
 
-# def plot_graph_weight(data, algorithm):
-#     x = [sum(item[3]) for item in data if item[0] == algorithm]
-#     y = [item[4] for item in data if item[0] == algorithm]
-#     plt.plot(x, y)
-#     plt.xlabel('Edge Weight')
-#     plt.ylabel('Time')
-#     plt.title(f'Graph for {algorithm} - Edge Weight')
-#     plt.show()
+def plot_graph_weight(data, algorithm):
+    x = [sum(item[3]) for item in data if item[0] == algorithm]
+    y = [item[4] for item in data if item[0] == algorithm]
+    plt.plot(x, y)
+    plt.xlabel('Edge Weight')
+    plt.ylabel('Time')
+    plt.title(f'Graph for {algorithm} - Edge Weight')
+    plt.show()
 
 
 

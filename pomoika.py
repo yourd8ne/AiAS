@@ -41,39 +41,7 @@
 
 
 
-import multiprocessing
 
-file_lock = multiprocessing.Lock()
-def run_test(test_func):
-    with file_lock:
-        test_func()
-
-
-# processes = [
-# #     multiprocessing.Process(target=run_test, args=(first_test_a,)),
-# #     multiprocessing.Process(target=run_test, args=(first_test_b,)),
-# #     multiprocessing.Process(target=run_test, args=(second_test_a,)),
-#     multiprocessing.Process(target=run_test, args=(second_test_b,)),
-# #     multiprocessing.Process(target=run_test, args=(third_test,)),
-#     multiprocessing.Process(target=run_test, args=(fourth_test_a,)),
-#     multiprocessing.Process(target=run_test, args=(fourth_test_b,))
-# ]
-
-# for process in processes:
-#     process.start()
-
-# for process in processes:
-#     process.join()
-
-# test_graph()
-# file_path = 'res_1a.csv'
-# parsed_data = parse_csv_file(file_path)
-
-# algorithm_3_heap = '3-куча'
-# algorithm_15_heap = '15-куча'
-
-# plot_graph_vertex(parsed_data, algorithm_3_heap)
-# plot_graph_vertex(parsed_data, algorithm_15_heap)
 
 
 
