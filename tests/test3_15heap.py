@@ -4,7 +4,8 @@ import gc
 import random
 import time
 import csv
-import matplotlib as plt
+import matplotlib.pyplot as plt
+
 
 def toFixed(numObj, digits=0):
     return f"{numObj:.{digits}f}"
@@ -20,6 +21,7 @@ def first_test_a():
         g15.generate_graph(n, m, (1, 1000000), results_file)
     gc.collect()  # Вручную вызывается сборщик мусора после каждого запуска
 
+
 def first_test_b():
     results_file = "res_1b.csv"
     for n in range(1, 10001, 100):
@@ -30,12 +32,13 @@ def first_test_b():
         g15.generate_graph(n, m, (1, 1000000), results_file)
     gc.collect()  # Вручную вызывается сборщик мусора после каждого запуска
 
+
 def second_test_a():
     results_file = "res_2a.csv"
     for n in range(1, 10001, 100):
         g3 = Graph3()
         g15 = Graph15()
-        m = 100*n
+        m = 100 * n
         g3.generate_graph(n, m, (1, 1000000), results_file)
         g15.generate_graph(n, m, (1, 1000000), results_file)
     gc.collect()
@@ -46,7 +49,7 @@ def second_test_b():
     for n in range(3701, 10001, 100):
         g3 = Graph3()
         g15 = Graph15()
-        m = 1000*n
+        m = 1000 * n
         g3.generate_graph(n, m, (1, 1000000), results_file)
         g15.generate_graph(n, m, (1, 1000000), results_file)
     gc.collect()
@@ -60,8 +63,6 @@ def third_test():
         g15 = Graph15()
         g3.generate_graph(n, m, (1, 1000000), results_file)
         g15.generate_graph(n, m, (1, 1000000), results_file)
-
-
 
 
 def fourth_test_a():
@@ -138,7 +139,7 @@ def fourth_test_b():
     g15 = Graph15()
     results_file = "res_4b.csv"
     n = 10000 + 1
-    m = 1000*n
+    m = 1000 * n
     for r in range(42, 67, 1):
         for i in range(n):
             g3.add_vertex(i)
@@ -186,7 +187,6 @@ def fourth_test_b():
             writer.writerow(result15)
 
 
-
 def parse_csv_file(file_path):
     data = []
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -199,10 +199,12 @@ def parse_csv_file(file_path):
                 range_values = eval(row[3])
                 time = float(row[4])
                 data.append((algorithm, edge_count, vertex_count, range_values, time))
+    print(data)
     return data
 
 
-def plot_graph_vertex(data, algorithm):
+def plot_graph_vertex(csv_file_path, algorithm):
+    data = parse_csv_file(csv_file_path)
     x = [item[1] for item in data if item[0] == algorithm]
     y = [item[4] for item in data if item[0] == algorithm]
     plt.plot(x, y)
@@ -221,6 +223,7 @@ def plot_graph_edges(data, algorithm):
     plt.title(f'Graph for {algorithm} - Edges')
     plt.show()
 
+
 def plot_graph_weight(data, algorithm):
     x = [sum(item[3]) for item in data if item[0] == algorithm]
     y = [item[4] for item in data if item[0] == algorithm]
@@ -231,4 +234,17 @@ def plot_graph_weight(data, algorithm):
     plt.show()
 
 
+def plot_graph_general(csv_file_path, algorithm_name):
+    data = parse_csv_file(csv_file_path)
 
+    # Настраиваем внешний вид графика
+    plt.figure(figsize=(8, 6))  # Размеры графика
+    plt.plot(data['x'], data['y'], color='blue', linewidth=2, marker='o', markersize=5)  # Цвет, толщина и маркер линии
+    plt.xlabel('X-Label')  # Подпись оси X
+    plt.ylabel('Y-Label')  # Подпись оси Y
+    plt.title('График')  # Заголовок графика
+    plt.grid(True)  # Отображение сетки на графике
+    plt.legend([algorithm_name], loc='upper left')  # Легенда
+
+    # Отображаем график
+    plt.show()

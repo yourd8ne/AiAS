@@ -41,31 +41,31 @@ if __name__ == '__main__':
 
     algorithm_name = 'Дейкстра'
     plot_graph_vertex(csv_file_path, algorithm_name)
-    csv_file_path = 'res_1b.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_vertex(csv_file_path, algorithm_name)
-    csv_file_path = 'res_2a.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_vertex(csv_file_path, algorithm_name)
-    csv_file_path = 'res_2b.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_vertex(csv_file_path, algorithm_name)
-
-    csv_file_path = 'res_3.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_edges(csv_file_path, algorithm_name)
-    csv_file_path = 'res_4a.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_weight(csv_file_path, algorithm_name)
-    csv_file_path = 'res_4b.csv'
-
-    algorithm_name = 'Дейкстра'
-    plot_graph_weight(csv_file_path, algorithm_name)
+    # csv_file_path = 'res_1b.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_vertex(csv_file_path, algorithm_name)
+    # csv_file_path = 'res_2a.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_vertex(csv_file_path, algorithm_name)
+    # csv_file_path = 'res_2b.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_vertex(csv_file_path, algorithm_name)
+    #
+    # csv_file_path = 'res_3.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_edges(csv_file_path, algorithm_name)
+    # csv_file_path = 'res_4a.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_weight(csv_file_path, algorithm_name)
+    # csv_file_path = 'res_4b.csv'
+    #
+    # algorithm_name = 'Дейкстра'
+    # plot_graph_weight(csv_file_path, algorithm_name)
 
     # # Настраиваем внешний вид графика
     # plt.figure(figsize=(8, 6))  # Размеры графика
