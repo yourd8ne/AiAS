@@ -5,7 +5,7 @@ import random
 import time
 import csv
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 def toFixed(numObj, digits=0):
     return f"{numObj:.{digits}f}"
@@ -194,23 +194,55 @@ def parse_csv_file(file_path):
         for row in reader:
             if len(row) >= 5:
                 algorithm = row[0]
-                edge_count = int(row[1])
-                vertex_count = int(row[2])
-                range_values = eval(row[3])
-                time = float(row[4])
-                data.append((algorithm, edge_count, vertex_count, range_values, time))
+                vertex_count = int(row[1])
+                edge_count = int(row[2])
+                q = eval(row[3])
+                r = eval(row[4])
+                time = toFixed(float(row[5]), 6)
+                data.append((algorithm, vertex_count, edge_count, q, r, time))
     print(data)
     return data
 
-
-def plot_graph_vertex(csv_file_path, algorithm):
+from scipy import stats
+import pandas as pd
+def plot_graph_vertex(csv_file_path):
+    # heap3 = '3-куча'
+    # heap15 = '15-куча'
     data = parse_csv_file(csv_file_path)
-    x = [item[1] for item in data if item[0] == algorithm]
-    y = [item[4] for item in data if item[0] == algorithm]
-    plt.plot(x, y)
-    plt.xlabel('Number of Edges and Vertices')
-    plt.ylabel('Time')
-    plt.title(f'Graph for {algorithm}')
+    # x = [item[1] for item in data if item[0] == heap3]
+    # y = [item[5] for item in data if item[0] == heap3]
+    # x2 = [item[1] for item in data if item[0] == heap15]
+    # y2 = [item[5] for item in data if item[0] == heap15]
+    # # offset = 1
+    # # # Применение Box-Cox Transformation
+    # # y_transformed, _ = stats.boxcox(y)
+    # # y2_transformed, _ = stats.boxcox(y2)
+    #
+    # plt.plot(x, y, color='red', label='3-куча')
+    # plt.plot(x2, y2, color='blue', label='15-куча')
+    # plt.xlabel('Number of Vertices')
+    # plt.ylabel('Time')
+    # plt.title('Dijkstra')
+    # # plt.yscale('log')
+    # plt.legend()
+    # plt.show()
+    heap3_data = [(item[1], item[5]) for item in data if item[0] == '3-куча']
+    heap15_data = [(item[1], item[5]) for item in data if item[0] == '15-куча']
+
+    x = [item[0] for item in heap3_data]
+    y = [item[1] for item in heap3_data]
+    x2 = [item[0] for item in heap15_data]
+    y2 = [item[1] for item in heap15_data]
+
+    plt.plot(x, y, color='red', label='3-куча')
+    plt.plot(x2, y2, color='blue', label='15-куча')
+    plt.xlabel('Количество вершин')
+    plt.ylabel('Время')
+    plt.title('График функции')
+    plt.legend()
+    plt.yscale('log')
+    plt.ylim(0, 200)
+    # plt.xlim(0, 200)
     plt.show()
 
 

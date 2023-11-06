@@ -39,8 +39,7 @@ if __name__ == '__main__':
 
     csv_file_path = 'res_1a.csv'
 
-    algorithm_name = 'Дейкстра'
-    plot_graph_vertex(csv_file_path, algorithm_name)
+    plot_graph_vertex(csv_file_path)
     # csv_file_path = 'res_1b.csv'
     #
     # algorithm_name = 'Дейкстра'
