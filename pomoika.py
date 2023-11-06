@@ -1,4 +1,48 @@
+# def dijkstra(self, source):
+    #     # Инициализация расстояний до всех вершин как бесконечность
+    #     distance = {vertex: float('inf') for vertex in self.vertices}
+    #     # Расстояние до исходной вершины равно 0
+    #     distance[source] = 0
+    #
+    #     # Создание и инициализация пирамиды
+    #     heap = HexadecimalHeap(len(self.vertices))
+    #     for vertex in self.vertices:
+    #         heap.push((distance[vertex], vertex))
+    #
+    #     while heap.current_size > 0:
+    #         # Извлечение вершины с наименьшим расстоянием из пирамиды
+    #         _, current_vertex = heap.pop()
+    #
+    #         # Проход по смежным вершинам
+    #         for neighbor in self.vertices[current_vertex]:
+    #             # Расчет нового расстояния до смежной вершины
+    #             new_distance = distance[current_vertex] + self.edges[(current_vertex, neighbor)]
+    #             # Если новое расстояние меньше текущего расстояния,
+    #             if new_distance < distance[neighbor]:
+    #                 # обновляем расстояние
+    #                 distance[neighbor] = new_distance
+    #                 # и добавляем вершину в пирамиду
+    #                 heap.push((new_distance, neighbor))
+    #
+    #     return distance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import multiprocessing
+
 file_lock = multiprocessing.Lock()
 def run_test(test_func):
     with file_lock:
