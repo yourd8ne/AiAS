@@ -32,14 +32,14 @@ if __name__ == '__main__':
     # second_test_a()
     # second_test_b()
     # fourth_test_a()
-    # third_test()
+    third_test()
     # fourth_test_b()
     # dijkstra1()
     # dijkstra2()
 
-    csv_file_path = 'res_1a.csv'
-
-    plot_graph_vertex(csv_file_path)
+    # csv_file_path = 'res_1a.csv'
+    #
+    # plot_graph_vertex(csv_file_path)
     # csv_file_path = 'res_1b.csv'
     #
     # algorithm_name = 'Дейкстра'

@@ -58,7 +58,7 @@ def second_test_b():
 def third_test():
     results_file = "res_3.csv"
     n = 10000 + 1
-    for m in range(6000000, 10000000, 100000):
+    for m in range(9500000, 10000000, 100000):
         g3 = Graph3()
         g15 = Graph15()
         g3.generate_graph(n, m, (1, 1000000), results_file)
