@@ -28,11 +28,11 @@ if __name__ == '__main__':
     # for process in processes:
     #     process.join()
     # first_test_a()
-    # first_test_b()
+    first_test_b()
     # second_test_a()
     # second_test_b()
     # fourth_test_a()
-    third_test()
+    # third_test()
     # fourth_test_b()
     # dijkstra1()
     # dijkstra2()

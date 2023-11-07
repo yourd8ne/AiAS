@@ -24,7 +24,7 @@ def first_test_a():
 
 def first_test_b():
     results_file = "res_1b.csv"
-    for n in range(1, 10001, 100):
+    for n in range(7501, 10001, 100):
         g3 = Graph3()
         g15 = Graph15()
         m = n ** 2
