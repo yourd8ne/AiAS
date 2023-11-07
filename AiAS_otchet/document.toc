@@ -1,0 +1,20 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {1}Введение}{2}{}%
+\contentsline {section}{\numberline {2}Описание Класса и Алгоритмов}{4}{}%
+\contentsline {subsection}{\numberline {2.1}TernaryHeap}{4}{}%
+\contentsline {subsection}{\numberline {2.2}Graph3}{4}{}%
+\contentsline {subsection}{\numberline {2.3}Описание алгоритма Дейкстры}{4}{}%
+\contentsline {subsection}{\numberline {2.4}Сложность Дейкстры}{5}{}%
+\contentsline {section}{\numberline {3}Результаты}{5}{}%
+\contentsline {subsection}{\numberline {3.1}Проверка алгоритма Дейкстры. Первый тест.}{5}{}%
+\contentsline {subsection}{\numberline {3.2}Проверка алгоритма Дейкстры. Второй тест}{7}{}%
+\contentsline {subsection}{\numberline {3.3}Тестирование на различных входных данных}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.1}Первый тест а}{7}{}%
+\contentsline {subsubsection}{\numberline {3.3.2}Первый тест б}{8}{}%
+\contentsline {subsubsection}{\numberline {3.3.3}Второй тест а}{10}{}%
+\contentsline {subsubsection}{\numberline {3.3.4}Второй тест б}{11}{}%
+\contentsline {subsubsection}{\numberline {3.3.5}Третий тест}{13}{}%
+\contentsline {subsubsection}{\numberline {3.3.6}Четвертый тест а}{14}{}%
+\contentsline {subsubsection}{\numberline {3.3.7}Четвертый тест б}{16}{}%
+\contentsline {subsection}{\numberline {3.4}Конфигурация компьютера}{18}{}%
+\contentsline {section}{\numberline {4}Вывод}{18}{}%
